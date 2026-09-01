@@ -1,0 +1,5 @@
+Commonwork WebMCP pilot brief
+
+Goal: replace one cross-functional decision meeting with an asynchronous room.
+Required signals: time to decision, input completion, participant trust, and handoff reduction.
+Human gates: invitations, publication, requirement acceptance, activation, and final decision.
