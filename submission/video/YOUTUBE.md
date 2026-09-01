@@ -29,7 +29,7 @@ Demo room: https://www.socialsum.com/#room=ops-meeting&tab=work
 
 - Visibility: Public
 - Audience: Not made for kids
-- Synthetic media: AI-generated narration and motion graphics; product screenshots and demonstrated behavior are authentic
+- Synthetic media: ElevenLabs AI-generated narration and AI-assisted motion graphics; product screenshots and demonstrated behavior are authentic
 - Tags: WebMCP, OpenAI, ChatGPT, AI agents, human agent collaboration, decision making, future of work, hackathon
 
 ## Upload assets
