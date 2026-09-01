@@ -11,10 +11,11 @@ Deadline: September 3, 2026 at 1:00 p.m. PDT / 4:00 p.m. EDT.
 - [x] README includes architecture, setup, environment, and WebMCP testing
 - [x] No secrets, private invitations, or private test data in repository
 - [x] Automated contract and live smoke tests pass
-- [ ] Final live signed-in rehearsal recorded
-- [ ] Narrated video rendered below 3 minutes with audio
-- [ ] Burned-in captions, SRT, thumbnail, and metadata verified
+- [x] Final live signed-in rehearsal completed, including role and version-conflict boundaries
+- [x] Narrated video rendered below 3 minutes with audio
+- [x] Burned-in captions, SRT, thumbnail, and metadata verified
 - [ ] YouTube video published publicly and playback verified — confirmation required
+- [x] Devpost text, judge instructions, and video metadata prepared
 - [ ] Devpost fields populated and preview checked
 - [ ] Entrant/team/eligibility information verified by Jonathan
 - [ ] Final **Submit project** action — confirmation required

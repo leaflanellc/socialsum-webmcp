@@ -19,11 +19,11 @@ Demo room: https://www.socialsum.com/#room=ops-meeting&tab=work
 - 0:00 Important work, without the meeting
 - 0:14 Contextual WebMCP discovery
 - 0:34 Shared decision state
-- 1:00 Durable agent catch-up
-- 1:26 Versioned change sets
-- 1:57 Human authority boundary
-- 2:19 Recoverable errors
-- 2:34 Outcome
+- 0:59 Durable agent catch-up
+- 1:21 Versioned change sets
+- 1:49 Human authority boundary
+- 2:11 Recoverable errors
+- 2:30 Outcome
 
 ## Settings
 
@@ -31,3 +31,9 @@ Demo room: https://www.socialsum.com/#room=ops-meeting&tab=work
 - Audience: Not made for kids
 - Synthetic media: AI-generated narration and motion graphics; product screenshots and demonstrated behavior are authentic
 - Tags: WebMCP, OpenAI, ChatGPT, AI agents, human agent collaboration, decision making, future of work, hackathon
+
+## Upload assets
+
+- Video: `out/socialsum-webmcp-demo.mp4` (2:45, 1920×1080, H.264 + AAC)
+- Captions: `out/socialsum-webmcp-demo.srt`
+- Thumbnail: `out/socialsum-thumbnail.png` (1280×720)
