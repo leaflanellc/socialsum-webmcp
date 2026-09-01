@@ -315,12 +315,6 @@ export default function Home() {
     successCriteria: 'Painful real-world problem\nWebMCP is essential, not decorative\nDemoable in under three minutes\nBuildable and testable during the hackathon',
   });
 
-  webMcpContextRef.current = {
-    isAnonymous: workspace?.user.isAnonymous ?? true,
-    detailOpen,
-    activeTab,
-  };
-
   const notify = useCallback((message: string) => {
     setToast(message);
     window.setTimeout(() => setToast(''), 3200);
@@ -384,6 +378,14 @@ export default function Home() {
   useEffect(() => {
     activeRoomRef.current = activeRoomId;
   }, [activeRoomId]);
+
+  useEffect(() => {
+    webMcpContextRef.current = {
+      isAnonymous: workspace?.user.isAnonymous ?? true,
+      detailOpen,
+      activeTab,
+    };
+  }, [activeTab, detailOpen, workspace?.user.isAnonymous]);
 
   useEffect(() => () => {
     if (agentIdleTimer.current !== null) window.clearTimeout(agentIdleTimer.current);
