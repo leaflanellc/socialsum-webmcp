@@ -278,9 +278,15 @@ export default function Home() {
   const [activeWebMcpToolCount, setActiveWebMcpToolCount] = useState<number>(WEBMCP_TOOL_GROUPS.bootstrap.length);
   const agentCallsInFlight = useRef(0);
   const agentIdleTimer = useRef<number | null>(null);
+  const webMcpRegistrationGeneration = useRef(0);
   const [detailOpen, setDetailOpen] = useState(false);
   const [publicExploreOpen, setPublicExploreOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'work' | 'requirements' | 'files' | 'constitution' | 'activity'>('work');
+  const webMcpContextRef = useRef<{
+    isAnonymous: boolean;
+    detailOpen: boolean;
+    activeTab: 'work' | 'requirements' | 'files' | 'constitution' | 'activity';
+  }>({ isAnonymous: true, detailOpen: false, activeTab: 'work' });
   const [localIdentity, setLocalIdentity] = useState<LocalIdentity>(() => currentLocalIdentity());
   const [setupOpen, setSetupOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -308,6 +314,12 @@ export default function Home() {
     governanceModel: 'Decision room',
     successCriteria: 'Painful real-world problem\nWebMCP is essential, not decorative\nDemoable in under three minutes\nBuildable and testable during the hackathon',
   });
+
+  webMcpContextRef.current = {
+    isAnonymous: workspace?.user.isAnonymous ?? true,
+    detailOpen,
+    activeTab,
+  };
 
   const notify = useCallback((message: string) => {
     setToast(message);
@@ -566,12 +578,12 @@ export default function Home() {
       inputSchema: { type: 'object', properties: {}, additionalProperties: false },
       annotations: { readOnlyHint: true },
       execute: async () => {
-        const isAnonymous = workspace?.user.isAnonymous ?? true;
-        const active = getActiveWebMcpToolNames({ isAnonymous, detailOpen, activeTab });
+        const context = webMcpContextRef.current;
+        const active = getActiveWebMcpToolNames(context);
         return {
           contract_version: '2026-09-01',
-          authentication: isAnonymous ? 'anonymous_read_only' : 'signed_in_participant',
-          page: detailOpen ? { kind: 'room', room_id: activeRoomRef.current, tab: activeTab } : { kind: 'workspace' },
+          authentication: context.isAnonymous ? 'anonymous_read_only' : 'signed_in_participant',
+          page: context.detailOpen ? { kind: 'room', room_id: activeRoomRef.current, tab: context.activeTab } : { kind: 'workspace' },
           active_tools: active,
           active_tool_count: active.length,
           total_capabilities: WEBMCP_TOOL_NAMES.length,
@@ -1020,6 +1032,7 @@ export default function Home() {
     });
 
     let cancelled = false;
+    const generation = ++webMcpRegistrationGeneration.current;
     const registrationTimer = window.setTimeout(() => void (async () => {
       const allowed = new Set(getActiveWebMcpToolNames({
         isAnonymous: workspace?.user.isAnonymous ?? true,
@@ -1028,7 +1041,7 @@ export default function Home() {
       }));
       const activeDefinitions = toolDefinitions.filter((tool) => allowed.has(String(tool.name)));
       if (modelContext.unregisterTool) await Promise.all(WEBMCP_TOOL_NAMES.map((name) => modelContext.unregisterTool?.(name).catch(() => undefined)));
-      if (!cancelled) {
+      if (!cancelled && webMcpRegistrationGeneration.current === generation) {
         await Promise.all(activeDefinitions.map((tool) => modelContext.registerTool(tool).catch(() => undefined)));
         setActiveWebMcpToolCount(activeDefinitions.length);
       }
@@ -1036,6 +1049,7 @@ export default function Home() {
 
     return () => {
       cancelled = true;
+      if (webMcpRegistrationGeneration.current === generation) webMcpRegistrationGeneration.current += 1;
       window.clearTimeout(registrationTimer);
     };
   }, [activeTab, detailOpen, loadRoom, loadWorkspace, workspace?.user.isAnonymous]);
